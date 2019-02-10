@@ -1,0 +1,9 @@
+[package]
+name = "colortest"
+version = "0.1.0"
+authors = ["Adilson Neto <almeidneto@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+color_processing = "0.2.0"
+image = "0.21.0"
