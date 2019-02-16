@@ -1,11 +1,17 @@
 [package]
 name = "color_counter"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Adilson Neto <almeidneto@gmail.com>"]
 edition = "2018"
+
+readme = "README.md"
+
+keywords = ["cli", "command", "color"]
+categories = ["command-line-utilities"]
+
 description = "A crate to inspect an image for most frequent colors."
-license = "MIT"
 repository = "https://github.com/aaneto/color_counter.rs"
+license = "MIT"
 
 [dependencies]
 color_processing = "0.2.1"
