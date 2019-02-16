@@ -7,10 +7,7 @@ are filled with colors, which are ordered by frequency on that region, the code 
 regions sorted by their most frequent color, and the colors on the regions are sorted by frequency also.
 
 ## Using
-
-Divide the color space in regions of 10% in each dimension (1000 regions in total).
-Display the first 2 regions sorted by their most frequent color, and print the
-2 most frequent colors of those regions. Use the file forest.jpg.
+This command will divide the color space 10 regions (10% of the dimension each), with 1000 regions in total, display the first 2 regions sorted by their most frequent color, and print the 2 most frequent colors of those regions, using the file forest.jpg.
 
 ```bash
 
