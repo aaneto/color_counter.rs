@@ -1,3 +1,8 @@
+//! The Space is the color space itself, containing many
+//! colors in their respective regions, the space is 
+//! responsible for holding and sorting this data so that
+//! frequent colors are easy to extract.
+
 use std::collections::HashMap;
 use color_processing::Color;
 
@@ -5,11 +10,9 @@ use crate::get_colors;
 use crate::constants::*;
 use crate::region::Region;
 
-/// The Space struct is a linear space subdivided in many regions
-/// every region is a Region struct with the data inside this region
-/// and a counter for frequency counting.
-/// 
-/// The idea is to insert data in a spacially dependent way.
+/// The Space struct is a linear space subdivided
+/// in many regions intended to segregate colors
+/// spatially.
 pub struct Space {
     regions: Vec<Region>,
     num_regions: usize,
@@ -17,7 +20,7 @@ pub struct Space {
 }
 
 impl Space {
-    /// Returns the index of the color in the space.
+    /// Returns the index of the region that this color belongs to.
     pub fn region_idx(&self, color: Color) -> usize {
         let laba = color.get_laba();
         let index_transform = self.region_size as f64;
@@ -29,8 +32,7 @@ impl Space {
         l_idx + a_idx * (index_transform as usize) + b_idx * (index_transform as usize) * (index_transform as usize)
     }
 
-    /// Create a new space from a file, reading it's colors
-    /// and saving them on the space sorted by frequency.
+    /// Create a new sorted space from a image file.
     pub fn from_file(filepath: &str, region_percentage: f64) -> Self {
         let colors = get_colors(filepath);
         let region_size = (1.0 / region_percentage) as usize;
@@ -47,19 +49,21 @@ impl Space {
         for _ in 0..space.num_regions {
             regions_counter.push(HashMap::new());
         }
-
+        
+        // Count colors using a hashmap.
         for color in colors {
             let idx = space.region_idx(color);
             let key = (color.red, color.green, color.blue);
 
             *regions_counter[idx].entry(key).or_insert(0) += 1;
         }
-
+        
+        // Collect this hashmap into many regions
         for region in regions_counter.iter().filter(|r| !r.is_empty()) {
             let mut new_region = Region::new();
 
             for (value, count) in region.iter() {
-                new_region.data.push((Color::new_rgb(value.0, value.1, value.2), *count));
+                new_region.push(Color::new_rgb(value.0, value.1, value.2), *count);
             }
             
             new_region.data.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
@@ -67,6 +71,7 @@ impl Space {
             space.regions.push(new_region);
         }
 
+        // sort regions using their most frequent color as a key.
         space.regions.sort_by(|a, b| {
             b.data[0].1.partial_cmp(&a.data[0].1).expect("Cannot compare empty region")
         });
