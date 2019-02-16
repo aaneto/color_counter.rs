@@ -1,4 +1,4 @@
-# Color Test
+# Color Counter
 
 A rust project for getting the color distribution of one image.
 

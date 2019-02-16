@@ -1,6 +1,6 @@
 use clap::{Arg, App};
 
-use colortest::space::Space;
+use color_counter::space::Space;
 
 fn main() {
     let matches = App::new("Color Counter")
