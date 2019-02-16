@@ -16,7 +16,6 @@ pub fn get_colors(filepath: &str) -> Vec<Color> {
     }).collect()
 }
 
-pub mod tests;
 pub mod region;
 pub mod space;
 pub mod constants;
