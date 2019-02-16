@@ -1,13 +1,13 @@
 //! The Space is the color space itself, containing many
-//! colors in their respective regions, the space is 
+//! colors in their respective regions, the space is
 //! responsible for holding and sorting this data so that
 //! frequent colors are easy to extract.
 
-use std::collections::HashMap;
 use color_processing::Color;
+use std::collections::HashMap;
 
-use crate::get_colors;
 use crate::constants::*;
+use crate::get_colors;
 use crate::region::Region;
 
 /// The Space struct is a linear space subdivided
@@ -29,7 +29,9 @@ impl Space {
         let a_idx = (index_transform * (laba.1 - A_START) / A_RANGE).floor() as usize;
         let b_idx = (index_transform * (laba.2 - B_START) / B_RANGE).floor() as usize;
 
-        l_idx + a_idx * (index_transform as usize) + b_idx * (index_transform as usize) * (index_transform as usize)
+        l_idx
+            + a_idx * (index_transform as usize)
+            + b_idx * (index_transform as usize) * (index_transform as usize)
     }
 
     /// Create a new sorted space from a image file.
@@ -37,7 +39,7 @@ impl Space {
         let colors = get_colors(filepath);
         let region_size = (1.0 / region_percentage) as usize;
         let num_regions = region_size * region_size * region_size;
-        
+
         let mut space = Space {
             regions: Vec::new(),
             num_regions,
@@ -49,7 +51,7 @@ impl Space {
         for _ in 0..space.num_regions {
             regions_counter.push(HashMap::new());
         }
-        
+
         // Count colors using a hashmap.
         for color in colors {
             let idx = space.region_idx(color);
@@ -57,7 +59,7 @@ impl Space {
 
             *regions_counter[idx].entry(key).or_insert(0) += 1;
         }
-        
+
         // Collect this hashmap into many regions
         for region in regions_counter.iter().filter(|r| !r.is_empty()) {
             let mut new_region = Region::new();
@@ -65,15 +67,20 @@ impl Space {
             for (value, count) in region.iter() {
                 new_region.push(Color::new_rgb(value.0, value.1, value.2), *count);
             }
-            
-            new_region.data.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
+
+            new_region
+                .data
+                .sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
 
             space.regions.push(new_region);
         }
 
         // sort regions using their most frequent color as a key.
         space.regions.sort_by(|a, b| {
-            b.data[0].1.partial_cmp(&a.data[0].1).expect("Cannot compare empty region")
+            b.data[0]
+                .1
+                .partial_cmp(&a.data[0].1)
+                .expect("Cannot compare empty region")
         });
 
         space

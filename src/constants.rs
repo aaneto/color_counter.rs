@@ -1,8 +1,8 @@
 //! This module define some useful constants.
-//! 
+//!
 //! The constants serve the purpose of easing the
 //! division of the color space.
-//! 
+//!
 //! Note that these values are aggressively rounded.
 //! These coordinates are all based on the CIELAB color
 //! space.
