@@ -28,7 +28,7 @@ cargo run -- --help
 ```
 
 # Todo
-- Adjust algorithm for populating the regions (what is the probability of EVERY region having a color?)
+- Detect neighboor regions and create macro regions adding then as an display option.
 - Better error handling
 - Better tests
-- Add documentation
+- Better sorting of regions and colors inside the region.
