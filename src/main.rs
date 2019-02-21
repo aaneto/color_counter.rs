@@ -4,7 +4,7 @@ use color_counter::space::Space;
 
 fn main() {
     let matches = App::new("Color Counter")
-        .version("0.1.5")
+        .version("0.1.6")
         .author("Adilson Neto <almeidneto@gmail.com>")
         .about("Count and display most frequent color by color region.")
         .arg(

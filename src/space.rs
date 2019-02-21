@@ -58,8 +58,13 @@ impl Space {
             let color = Color::new_rgb(color.0, color.1, color.2);
 
             let region_idx = space.region_idx(color);
+
+            // Get a mutable reference to regions so
+            // that it can be sent inside the closure below.
             let regions = &mut space.regions;
 
+            // if region is not on the space, create a vec for it and
+            // register the index of the vec in the region_to_vec hash.
             let regions_vec_idx = *space.region_to_vec.entry(region_idx).or_insert_with(|| {
                 regions.push(Region::new());
 
@@ -73,17 +78,25 @@ impl Space {
             region.sort_by_frequency();
         }
 
+        // O(NUM_REGION * SIZE_REGION) on the worst case
+        // But we can afford to be expensive, since there
+        // are not many cases where all of the elements of
+        // a region have the same count.
         space.regions.sort_by(|a, b| {
-            if b[0].1 == a[0].1 && a.len() > 1 && b.len() > 1 {
-                b[1].1.partial_cmp(&a[1].1).unwrap()
-            } else {
-                b[0].1.partial_cmp(&a[0].1).unwrap()
+            let smaller_len = std::cmp::min(a.len(), b.len());
+            let mut idx = 0;
+
+            while b[idx].1 == a[idx].1 && idx < smaller_len - 1 {
+                idx += 1;
             }
+
+            b[idx].1.partial_cmp(&a[idx].1).unwrap()
         });
-        
+
         space
     }
 
+    /// Returns an iterator for the regions.
     pub fn regions_iter(&self) -> impl Iterator<Item = &Region> {
         self.regions.iter()
     }
@@ -102,7 +115,7 @@ mod tests {
 
         for (i, region) in space.regions_iter().take(10).enumerate() {
             let count = region[0].1;
-            
+
             assert!(expected_data[i] == count);
         }
     }

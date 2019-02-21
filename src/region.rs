@@ -38,10 +38,9 @@ impl Region {
         Color::new_lab(average_color.0, average_color.1, average_color.2)
     }
 
+    /// Sort the colors inside the region by their frequency.
     pub fn sort_by_frequency(&mut self) {
-        self.data.sort_by(|a, b| {
-            b.1.partial_cmp(&a.1).unwrap()
-        });
+        self.data.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
     }
 
     /// Push a new color with count into data holder.
@@ -49,23 +48,29 @@ impl Region {
         self.data.push((color, count))
     }
 
-    /// Wrapper for vec.is_empty
+    /// Returns if the region is empty.
     pub fn is_empty(&self) -> bool {
         self.data.is_empty()
     }
 
-    pub fn iter<'s>(&'s self) -> impl Iterator<Item=&(Color, usize)> + 's {
+    /// Returns an iterator for the region.
+    pub fn iter<'s>(&'s self) -> impl Iterator<Item = &(Color, usize)> + 's {
         self.data.iter()
     }
 
+    /// Returns the length of the region.
     pub fn len(&self) -> usize {
         self.data.len()
     }
 }
 
+/// Indexing is implemented for the region to
+/// provide a easier access to (Color, usize)
+/// elements.
 impl std::ops::Index<usize> for Region {
     type Output = (Color, usize);
 
+    /// Implement indexing for usize.
     fn index(&self, idx: usize) -> &(Color, usize) {
         &self.data[idx]
     }

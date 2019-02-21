@@ -31,4 +31,3 @@ cargo run -- --help
 - Detect neighboor regions and create macro regions adding then as an display option.
 - Better error handling
 - Better tests
-- Better sorting of regions and colors inside the region.
