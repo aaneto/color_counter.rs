@@ -8,7 +8,7 @@ use color_processing::Color;
 /// it has meaning only in context.
 #[derive(Default)]
 pub struct Region {
-    pub data: Vec<(Color, usize)>,
+    data: Vec<(Color, usize)>,
 }
 
 impl Region {
@@ -38,6 +38,12 @@ impl Region {
         Color::new_lab(average_color.0, average_color.1, average_color.2)
     }
 
+    pub fn sort_by_frequency(&mut self) {
+        self.data.sort_by(|a, b| {
+            b.1.partial_cmp(&a.1).unwrap()
+        });
+    }
+
     /// Push a new color with count into data holder.
     pub fn push(&mut self, color: Color, count: usize) {
         self.data.push((color, count))
@@ -46,5 +52,21 @@ impl Region {
     /// Wrapper for vec.is_empty
     pub fn is_empty(&self) -> bool {
         self.data.is_empty()
+    }
+
+    pub fn iter<'s>(&'s self) -> impl Iterator<Item=&(Color, usize)> + 's {
+        self.data.iter()
+    }
+
+    pub fn len(&self) -> usize {
+        self.data.len()
+    }
+}
+
+impl std::ops::Index<usize> for Region {
+    type Output = (Color, usize);
+
+    fn index(&self, idx: usize) -> &(Color, usize) {
+        &self.data[idx]
     }
 }

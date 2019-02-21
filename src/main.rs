@@ -75,7 +75,7 @@ fn main() {
             println!("Average Color: {}", region.average_color().to_rgb_string());
         }
 
-        for (i, (color, count)) in region.data.iter().take(num_colors).enumerate() {
+        for (i, (color, count)) in region.iter().take(num_colors).enumerate() {
             println!(
                 "Color {}: {} Frequency: {}",
                 i + 1,

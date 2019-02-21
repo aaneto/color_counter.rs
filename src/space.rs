@@ -15,7 +15,7 @@ use crate::region::Region;
 /// spatially.
 pub struct Space {
     regions: Vec<Region>,
-    num_regions: usize,
+    region_to_vec: HashMap<usize, usize>,
     region_size: usize,
 }
 
@@ -38,57 +38,54 @@ impl Space {
     pub fn from_file(filepath: &str, region_percentage: f64) -> Self {
         let colors = get_colors(filepath);
         let region_size = (1.0 / region_percentage) as usize;
-        let num_regions = region_size * region_size * region_size;
 
         let mut space = Space {
             regions: Vec::new(),
-            num_regions,
+            region_to_vec: HashMap::new(),
             region_size,
         };
 
-        let mut regions_counter: Vec<HashMap<(u8, u8, u8), usize>> = Vec::new();
-
-        for _ in 0..space.num_regions {
-            regions_counter.push(HashMap::new());
-        }
+        let mut regions_counter: HashMap<(u8, u8, u8), usize> = HashMap::new();
 
         // Count colors using a hashmap.
         for color in colors {
-            let idx = space.region_idx(color);
             let key = (color.red, color.green, color.blue);
 
-            *regions_counter[idx].entry(key).or_insert(0) += 1;
+            *regions_counter.entry(key).or_insert(0) += 1;
         }
 
-        // Collect this hashmap into many regions
-        for region in regions_counter.iter().filter(|r| !r.is_empty()) {
-            let mut new_region = Region::new();
+        for (color, count) in regions_counter {
+            let color = Color::new_rgb(color.0, color.1, color.2);
 
-            for (value, count) in region.iter() {
-                new_region.push(Color::new_rgb(value.0, value.1, value.2), *count);
-            }
+            let region_idx = space.region_idx(color);
+            let regions = &mut space.regions;
 
-            new_region
-                .data
-                .sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
+            let regions_vec_idx = *space.region_to_vec.entry(region_idx).or_insert_with(|| {
+                regions.push(Region::new());
 
-            space.regions.push(new_region);
+                regions.len() - 1
+            });
+
+            space.regions[regions_vec_idx].push(color, count);
         }
 
-        // sort regions using their most frequent color as a key.
+        for region in space.regions.iter_mut() {
+            region.sort_by_frequency();
+        }
+
         space.regions.sort_by(|a, b| {
-            b.data[0]
-                .1
-                .partial_cmp(&a.data[0].1)
-                .expect("Cannot compare empty region")
+            if b[0].1 == a[0].1 && a.len() > 1 && b.len() > 1 {
+                b[1].1.partial_cmp(&a[1].1).unwrap()
+            } else {
+                b[0].1.partial_cmp(&a[0].1).unwrap()
+            }
         });
-
+        
         space
     }
 
-    /// Get an iterator for all the non-empty regions of the space.
     pub fn regions_iter(&self) -> impl Iterator<Item = &Region> {
-        self.regions.iter().filter(|r| !r.is_empty())
+        self.regions.iter()
     }
 }
 
@@ -104,9 +101,8 @@ mod tests {
         let expected_data = vec![48, 48, 31, 28, 27, 25, 25, 20, 18, 17];
 
         for (i, region) in space.regions_iter().take(10).enumerate() {
-            let count = region.data[0].1;
-            // Only count is tested because there may be a slight variation
-            // on the actual rgb data.
+            let count = region[0].1;
+            
             assert!(expected_data[i] == count);
         }
     }
