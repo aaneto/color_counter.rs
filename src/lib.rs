@@ -36,6 +36,9 @@ pub mod constants;
 pub mod region;
 pub mod space;
 
+pub use color_processing;
+pub use image;
+
 /// Prelude module with usable reexports and common modules.
 pub mod prelude {
     pub use crate::region::Region;
