@@ -35,3 +35,10 @@ pub fn get_colors(filepath: &str) -> Vec<Color> {
 pub mod constants;
 pub mod region;
 pub mod space;
+
+pub mod prelude {
+    pub use color_processing::Color;
+    pub use image::GenericImageView;
+    pub use space::Space;
+    pub use region::Region;
+};
