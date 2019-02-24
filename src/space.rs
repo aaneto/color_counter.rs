@@ -37,6 +37,12 @@ impl Space {
     /// Create a new sorted space from a image file.
     pub fn from_file(filepath: &str, region_percentage: f64) -> Self {
         let colors = get_colors(filepath);
+
+        Self::from_colors(colors, region_percentage)
+    }
+
+    /// Create a new sorted space from a vec of colors.
+    pub fn from_colors(colors: Vec<Color>, region_percentage: f64) -> Self {
         let region_size = (1.0 / region_percentage) as usize;
 
         let mut space = Space {

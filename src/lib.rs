@@ -8,6 +8,7 @@
 //! There is also a constants module, to define the boundaries
 //! of the color space, this is used to divide the color space
 //! and put every color on its 'bucket'.
+#![deny(missing_docs)]
 
 use color_processing::Color;
 use image::GenericImageView;
