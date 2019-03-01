@@ -8,17 +8,14 @@
 //! There is also a constants module, to define the boundaries
 //! of the color space, this is used to divide the color space
 //! and put every color on its 'bucket'.
+#![deny(missing_docs)]
 
 use color_processing::Color;
 use image::GenericImageView;
 
-/// Open an image in a path 'filepath' and
-/// store all it's pixels in a Vec of Colors.
-///
-/// Effectively this just converts the reading of an
-/// image by the image crate to a Color in the color_processing
-/// crate format.
-pub fn get_colors(filepath: &str) -> Vec<Color> {
+/// Read an image file and store all pixels
+/// as Color's on a Vec.
+fn colors_from_file(filepath: &str) -> Vec<Color> {
     let image = image::open(filepath).unwrap();
 
     image
@@ -31,6 +28,31 @@ pub fn get_colors(filepath: &str) -> Vec<Color> {
         .collect()
 }
 
+/// Read an byte array of a image file and store
+/// all pixels in a Vec as Color's.
+pub fn colors_from_bytes(bytes: Vec<u8>) -> Vec<Color> {
+    let img = image::load_from_memory(&bytes).expect("Cannot load image from bytes.");
+
+    img.pixels()
+        .map(|pixel| {
+            let data = pixel.2.data;
+
+            Color::new_rgba(data[0], data[1], data[2], data[3])
+        })
+        .collect()
+}
+
 pub mod constants;
 pub mod region;
 pub mod space;
+
+pub use color_processing;
+pub use image;
+
+/// Prelude module with usable reexports and common modules.
+pub mod prelude {
+    pub use crate::region::Region;
+    pub use crate::space::Space;
+    pub use color_processing::Color;
+    pub use image::GenericImageView;
+}

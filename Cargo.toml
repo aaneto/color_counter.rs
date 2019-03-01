@@ -1,6 +1,6 @@
 [package]
 name = "color_counter"
-version = "0.1.6"
+version = "0.2.0"
 authors = ["Adilson Neto <almeidneto@gmail.com>"]
 edition = "2018"
 
@@ -15,5 +15,12 @@ license = "MIT"
 
 [dependencies]
 color_processing = "0.2.1"
-image = "0.21.0"
 clap = "2.32.0"
+
+[dependencies.image]
+version = "0.21.0"
+features = ["gif_codec", "jpeg", "ico", "png_codec", "pnm", "tga", "tiff", "webp", "bmp", "hdr", "dxt"]
+default-features = false
+
+[features]
+jpeg_rayon = ["image/jpeg_rayon"]
