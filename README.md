@@ -1,13 +1,11 @@
 # Color Counter
 
-A rust project for getting the color distribution of one image.
+A project for getting the color distribution of one image.
 
-The code works by dividing the colors into a cube on the CIELAB color space. Later those "regions"
-are filled with colors, which are ordered by frequency on that region, the code then returns those
-regions sorted by their most frequent color, and the colors on the regions are sorted by frequency also.
+The current version works by dividing the CIELAB color space linearly and creating "regions" of colors sorted by frequency.
 
 ## Using
-This command will divide the color space 10 regions (10% of the dimension each), with 1000 regions in total, display the first 2 regions sorted by their most frequent color, and print the 2 most frequent colors of those regions, using the file forest.jpg.
+This command will divide the color space in 10 regions (10% of the dimension each), with 1000 regions in total, display the first 2 regions sorted by their most frequent color, and print the 2 most frequent colors of those regions, using the file forest.jpg.
 
 ```bash
 
@@ -28,6 +26,6 @@ cargo run -- --help
 ```
 
 # Todo
-- Detect neighboor regions and create macro regions adding then as an display option.
+- Experiment with aditional algorithms
 - Better error handling
 - Better tests
