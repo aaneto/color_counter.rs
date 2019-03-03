@@ -25,7 +25,13 @@ To see the options:
 cargo run -- --help
 ```
 
-# Todo
-- Experiment with aditional algorithms
-- Better error handling
-- Better tests
+## Future Work
+After tinkering around with this projects, I decided to call it done, all
+the improvements that can be made are related to testing and error handling.
+
+While doing this I realised that there is a whole thing about this kind of color
+extraction, such as color quantization, since this crate is called color counter,
+I believe it's not meant to use those many more efficient algorithms.
+
+So, if I ever come with different implementations, it will probably be made into
+a different crate (color quantize, maybe?).
