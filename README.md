@@ -25,13 +25,15 @@ To see the options:
 cargo run -- --help
 ```
 
-## Future Work
-After tinkering around with this projects, I decided to call it done, all
-the improvements that can be made are related to testing and error handling.
+## Project Conclusion
 
 While doing this I realised that there is a whole thing about this kind of color
-extraction, such as color quantization, since this crate is called color counter,
-I believe it's not meant to use those many more efficient algorithms.
-
-So, if I ever come with different implementations, it will probably be made into
+extraction, such as color quantization, if I ever come with different implementations it will probably be made into
 a different crate (color quantize, maybe?).
+
+Another thing to note, the CIELAB space is not linear and linear space division might not be ideal to this problem.
+
+## Webassembly notes
+
+On the lib.rs there is a function called colors_from_bytes, that can be used from a webassembly context, I have tested that to work
+properly to some degree.
