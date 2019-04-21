@@ -1,6 +1,6 @@
 [package]
 name = "color_counter"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Adilson Neto <almeidneto@gmail.com>"]
 edition = "2018"
 
@@ -14,8 +14,8 @@ repository = "https://github.com/aaneto/color_counter.rs"
 license = "MIT"
 
 [dependencies]
-color_processing = "0.2.1"
-clap = "2.32.0"
+color_processing = "0.3.0"
+clap = "2.33.0"
 
 [dependencies.image]
 version = "0.21.0"
