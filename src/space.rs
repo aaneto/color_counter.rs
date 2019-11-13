@@ -20,7 +20,7 @@ pub struct Space {
 
 impl Space {
     /// Returns the index of the region that this color belongs to.
-    pub fn region_idx(&self, color: Color) -> usize {
+    pub fn region_idx(&self, color: &Color) -> usize {
         let laba = color.get_laba();
         let index_transform = self.region_size as f64;
 
@@ -69,7 +69,7 @@ impl Space {
         for (color, count) in regions_counter {
             let color = Color::new_rgb(color.0, color.1, color.2);
 
-            let region_idx = space.region_idx(color);
+            let region_idx = space.region_idx(&color);
 
             // Get a mutable reference to regions so
             // that it can be sent inside the closure below.
