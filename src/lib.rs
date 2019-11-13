@@ -20,11 +20,7 @@ fn colors_from_file(filepath: &str) -> Vec<Color> {
 
     image
         .pixels()
-        .map(|pixel| {
-            let data = pixel.2.data;
-
-            Color::new_rgba(data[0], data[1], data[2], data[3])
-        })
+        .map(|(_x, _y, color)| Color::new_rgba(color[0], color[1], color[2], color[3]))
         .collect()
 }
 
@@ -34,11 +30,7 @@ pub fn colors_from_bytes(bytes: Vec<u8>) -> Vec<Color> {
     let img = image::load_from_memory(&bytes).expect("Cannot load image from bytes.");
 
     img.pixels()
-        .map(|pixel| {
-            let data = pixel.2.data;
-
-            Color::new_rgba(data[0], data[1], data[2], data[3])
-        })
+        .map(|(_x, _y, color)| Color::new_rgba(color[0], color[1], color[2], color[3]))
         .collect()
 }
 

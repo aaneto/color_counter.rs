@@ -1,6 +1,6 @@
 [package]
 name = "color_counter"
-version = "0.2.2"
+version = "0.2.3"
 authors = ["Adilson Neto <almeidneto@gmail.com>"]
 edition = "2018"
 
@@ -18,7 +18,7 @@ color_processing = "0.4.1"
 clap = "2.33.0"
 
 [dependencies.image]
-version = "0.21.3"
+version = "0.22.3"
 features = ["gif_codec", "jpeg", "ico", "png_codec", "pnm", "tga", "tiff", "webp", "bmp", "hdr", "dxt"]
 default-features = false
 
