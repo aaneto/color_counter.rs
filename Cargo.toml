@@ -18,7 +18,7 @@ color_processing = "0.4.1"
 clap = "2.33.0"
 
 [dependencies.image]
-version = "0.21.0"
+version = "0.21.3"
 features = ["gif_codec", "jpeg", "ico", "png_codec", "pnm", "tga", "tiff", "webp", "bmp", "hdr", "dxt"]
 default-features = false
 
