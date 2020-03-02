@@ -4,11 +4,9 @@ A project for getting the color distribution of one image.
 
 The current version works by dividing the CIELAB color space linearly and creating "regions" of colors sorted by frequency.
 
-![coverage status](https://github.com/aaneto/color_counter.rs/workflows/Coverage/badge.svg)
 ![quality gate](https://github.com/aaneto/color_counter.rs/workflows/Quality%20Gate/badge.svg)
 ![tests](https://github.com/aaneto/color_counter.rs/workflows/Tests/badge.svg)
-![release](https://github.com/aaneto/color_counter.rs/workflows/Release/badge.svg)
-[![codecov](https://codecov.io/gh/aaneto/color_counter.rs/branch/master/graph/badge.svg)](https://codecov.io/gh/aaneto/celtic-names)
+
 
 ## Using
 This command will divide the color space in 10 regions (10% of the dimension each), with 1000 regions in total, display the first 2 regions sorted by their most frequent color, and print the 2 most frequent colors of those regions, using the file forest.jpg.
