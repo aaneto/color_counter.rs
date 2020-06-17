@@ -31,7 +31,7 @@ cargo run -- --help
 
 ## Project Conclusion
 
-While doing this I realised that there is a whole thing about this kind of color
+While doing this I realized that there is a whole thing about this kind of color
 extraction, such as color quantization, if I ever come with different implementations it will probably be made into
 a different crate (color quantize, maybe?).
 
