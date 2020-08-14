@@ -15,7 +15,7 @@ license = "MIT"
 
 [dependencies]
 color_processing = "0.5.0"
-clap = "2.33.1"
+clap = "2.33.3"
 
 [dependencies.image]
 version = "0.22.5"
