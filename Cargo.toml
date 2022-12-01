@@ -14,7 +14,7 @@ repository = "https://github.com/aaneto/color_counter.rs"
 license = "MIT"
 
 [dependencies]
-color_processing = "0.6.0"
+color_processing = "0.6.2"
 clap = "2.33.3"
 
 [dependencies.image]
